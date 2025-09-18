@@ -8,8 +8,16 @@ namespace AutomatedEmailSender
         public string ToAddress;
         public string Subject;
         public string Content;
-        public string AppPassword;
 
-        public abstract void Email(string fromaddress, string toaddress, string subject, string content);
+
+        public EmailService(string fromaddress, string toaddress, string subject, string content)
+        {
+            FromAddress = fromaddress;
+            ToAddress = toaddress;
+            Subject = subject;
+            Content = content;
+        }
+
+        public abstract void SendEmail();
     }
 }
