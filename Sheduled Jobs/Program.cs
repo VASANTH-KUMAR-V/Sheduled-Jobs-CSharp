@@ -1,14 +1,15 @@
 ﻿using Sheduled_Jobs;
 using System;
+using System.Threading.Tasks; // Required for async Task
 
 namespace AutomatedEmailSender
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            SendEmails toemail = new SendEmails();
-            toemail.send();
+            var test = new SendEmails();
+            test.Send();
         }
     }
 }

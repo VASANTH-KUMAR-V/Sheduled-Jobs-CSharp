@@ -6,11 +6,11 @@ using System.Xml.Linq;
 
 namespace AutomatedEmailSender
 {
-    public class SendAutomatedEmail : EmailService
+    public class BuiltinEmailService : EmailSender
     {
         private string GmailAppPassword = null;
         // Constructor for SendAutomatedEmail, passing parameters to the base class
-        public SendAutomatedEmail(string fromAddress, string toAddress, string subject, string content, string gmailAppPassword)
+        public BuiltinEmailService(string fromAddress, string toAddress, string subject, string content, string gmailAppPassword)
             : base(fromAddress, toAddress, subject, content)
         {
             GmailAppPassword = gmailAppPassword;

@@ -11,27 +11,29 @@ namespace Sheduled_Jobs
     {
         public string gmailAppPassword = null;
         public string fromAddress = null;
-        public void  send() {
+        public void Send() {
 
             gmailAppPassword = "ebip gwqo kpzr hlym";
 
-            fromAddress = "vasanthvc0211@gmail.com";
-
             // Get dynamic user input for 'toAddress', 'subject', and 'content'
             Console.WriteLine("Enter the recipient's email address:");
-            string toAddress = Console.ReadLine();
+            var toAddress = Console.ReadLine();
 
             Console.WriteLine("Enter the email subject:");
-            string subject = Console.ReadLine();
+            var subject = Console.ReadLine();
 
             Console.WriteLine("Enter the email content (HTML allowed):");
-            string content = Console.ReadLine();
+            var content = Console.ReadLine();
 
-            // Create the SendAutomatedEmail object with user input
-            SendAutomatedEmail emailSender = new SendAutomatedEmail(fromAddress, toAddress, subject, content, gmailAppPassword);
+            //Create the BuiltinEmailService object with user input
+            //var emailSender = new BuiltinEmailService(fromAddress, toAddress, subject, content, gmailAppPassword);
+            //emailSender.SendEmail();
 
-            // Send the email
-            emailSender.SendEmail();
+            //Create the MailAutomatedEmail object with user input
+            //var email = new MailKitEmailService(fromAddress, toAddress, subject, content, gmailAppPassword);
+            //email.SendEmail();
+
         }
+
     }
 }

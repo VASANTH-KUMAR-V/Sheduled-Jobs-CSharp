@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AutomatedEmailSender
 {
-    public abstract class EmailService
+    public abstract class EmailSender
     {
         public string FromAddress;
         public string ToAddress;
@@ -10,7 +11,7 @@ namespace AutomatedEmailSender
         public string Content;
 
 
-        public EmailService(string fromaddress, string toaddress, string subject, string content)
+        public EmailSender(string fromaddress, string toaddress, string subject, string content)
         {
             FromAddress = fromaddress;
             ToAddress = toaddress;
