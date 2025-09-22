@@ -1,51 +1,65 @@
-﻿    using System;
-    using System.Threading.Tasks;
-    using MailKit.Net.Smtp;
-    using MailKit.Security;
-    using MimeKit;
+﻿using System;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 
-    namespace AutomatedEmailSender
+namespace AutomatedEmailSender
+{
+    public class MailKitEmailService : EmailSender
     {
-        public class MailKitEmailService : EmailSender
-        {
-            private string GmailAppPassword;
+        private string GmailAppPassword;
 
-            public MailKitEmailService(string fromAddress, string toAddress, string subject, string content, string gmailAppPassword)
-                : base(fromAddress, toAddress, subject, content)
+        public MailKitEmailService(string fromAddress, string toAddress, string ccAddress, string bccAddress, string subject, string content, string gmailAppPassword)
+            : base(fromAddress, toAddress, ccAddress, bccAddress, subject, content)
+        {
+            GmailAppPassword = gmailAppPassword;
+        }
+
+        public override void SendEmail()
+        {
+            var email = new MimeMessage();
+
+            email.From.Add(new MailboxAddress("Sender", FromAddress));
+            email.To.Add(new MailboxAddress("Recipient", ToAddress));
+            email.Subject = Subject;
+            email.Body = new TextPart("plain")
             {
-                GmailAppPassword = gmailAppPassword;
+                Text = Content
+            };
+
+            // Add CC if provided
+            if (!string.IsNullOrWhiteSpace(CcAddress))
+            {
+                email.Cc.Add(new MailboxAddress("CC", CcAddress));
             }
 
-            public override void SendEmail()
+            // Add BCC if provided
+            if (!string.IsNullOrWhiteSpace(BccAddress))
             {
-                var email = new MimeMessage();
-                email.From.Add(new MailboxAddress("Sender Name",FromAddress));
-                email.To.Add(new MailboxAddress("Recipient Name", ToAddress));
-                email.Subject = Subject;
-                email.Body = new TextPart("plain")
-                {
-                    Text = Content
-                };
+                email.Bcc.Add(new MailboxAddress("BCC", BccAddress));
+            }
+
             try
             {
                 using (var smtp = new SmtpClient())
                 {
-                    smtp.ServerCertificateValidationCallback = (s, c, h, e) => true; 
+                    smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
                     Console.WriteLine("Connecting to SMTP server...");
                     smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
                     Console.WriteLine("Connected.");
 
-                     smtp.Authenticate(FromAddress, GmailAppPassword);
-                     smtp.Send(email);
+                    smtp.Authenticate(FromAddress, GmailAppPassword);
+                    smtp.Send(email);
                     smtp.Disconnect(true);
+
+                    Console.WriteLine("Email sent successfully!");
                 }
             }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Failed to send email: " + ex.Message);
-                    }
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to send email: " + ex.Message);
             }
         }
     }
+}

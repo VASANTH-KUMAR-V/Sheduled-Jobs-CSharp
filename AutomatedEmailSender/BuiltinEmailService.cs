@@ -10,8 +10,8 @@ namespace AutomatedEmailSender
     {
         private string GmailAppPassword = null;
         // Constructor for SendAutomatedEmail, passing parameters to the base class
-        public BuiltinEmailService(string fromAddress, string toAddress, string subject, string content, string gmailAppPassword)
-            : base(fromAddress, toAddress, subject, content)
+        public BuiltinEmailService(string fromAddress, string toAddress, string ccaddress, string bccaddress, string subject, string content, string gmailAppPassword)
+            : base(fromAddress, toAddress, ccaddress, ccaddress, subject, content)
         {
             GmailAppPassword = gmailAppPassword;
         }
@@ -28,6 +28,17 @@ namespace AutomatedEmailSender
                     mail.Subject = Subject;  // using inherited 'subject'
                     mail.Body = Content;     // using inherited 'content'
                     mail.IsBodyHtml = true;
+                    // Add CC if provided
+                    if (!string.IsNullOrWhiteSpace(CcAddress))
+                    {
+                        mail.CC.Add(CcAddress);
+                    }
+
+                    // Add BCC if provided
+                    if (!string.IsNullOrWhiteSpace(BccAddress))
+                    {
+                        mail.Bcc.Add(BccAddress);
+                    }
 
                     using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                     {
