@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sheduled Jobs", "Sheduled Jobs\Sheduled Jobs.csproj", "{5010FF94-163B-432B-8E5D-F9A0183CF58F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheduled Jobs", "Sheduled Jobs\Sheduled Jobs.csproj", "{5010FF94-163B-432B-8E5D-F9A0183CF58F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatedEmailSender", "AutomatedEmailSender\AutomatedEmailSender.csproj", "{8BBEE125-76D9-401D-98F8-FE768EA0A243}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomatedEmailSender", "AutomatedEmailSender\AutomatedEmailSender.csproj", "{8BBEE125-76D9-401D-98F8-FE768EA0A243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD Operation Using JSON", "CRUD Operation Using JSON\CRUD Operation Using JSON.csproj", "{8B02A352-3D2F-4675-9D6F-9F5B91163C44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientAppUsingJson", "PatientAppUsingJson\PatientAppUsingJson.csproj", "{A34E4C48-4A96-4205-B16A-5C005432873F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{8BBEE125-76D9-401D-98F8-FE768EA0A243}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BBEE125-76D9-401D-98F8-FE768EA0A243}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BBEE125-76D9-401D-98F8-FE768EA0A243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B02A352-3D2F-4675-9D6F-9F5B91163C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B02A352-3D2F-4675-9D6F-9F5B91163C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B02A352-3D2F-4675-9D6F-9F5B91163C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B02A352-3D2F-4675-9D6F-9F5B91163C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34E4C48-4A96-4205-B16A-5C005432873F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34E4C48-4A96-4205-B16A-5C005432873F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34E4C48-4A96-4205-B16A-5C005432873F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34E4C48-4A96-4205-B16A-5C005432873F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

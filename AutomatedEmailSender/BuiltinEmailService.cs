@@ -11,7 +11,7 @@ namespace AutomatedEmailSender
         private string GmailAppPassword = null;
         // Constructor for SendAutomatedEmail, passing parameters to the base class
         public BuiltinEmailService(string fromAddress, string toAddress, string ccaddress, string bccaddress, string subject, string content, string gmailAppPassword)
-            : base(fromAddress, toAddress, ccaddress, ccaddress, subject, content)
+            : base(fromAddress, toAddress, ccaddress, bccaddress, subject, content)
         {
             GmailAppPassword = gmailAppPassword;
         }
