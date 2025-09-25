@@ -1,5 +1,4 @@
-﻿using Org.BouncyCastle.Asn1.Pkcs;
-using PatientLibrary;
+﻿using PatientLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,26 +40,34 @@ namespace PatientAppUsingJson
                         RemovePatient();
                         break;
                     case 3:
-                        ShowPatients();
+                        ShowPatients(manager.GetAllPatients());
                         break;
                     case 4:
                         UpdatePatient();
                         break;
                     case 5:
+                        SearchByName();
+                        break;
                     case 6:
+                        SearchByEmail();
+                        break;
                     case 7:
+                        SearchByMobile();
+                        break;
                     case 8:
+                       // Console.WriteLine("hai");
                     case 9:
+                        SearchByLocation();
+                        break;
                     case 10:
                         Console.WriteLine("Exiting.....");
-                        return; // exit the method, breaking out of the while loop
+                        return;
                     default:
                         Console.WriteLine("You have entered an invalid number to perform an action.");
                         break;
                 }
             }
         }
-
 
         private void AddPatient()
         {
@@ -72,45 +79,43 @@ namespace PatientAppUsingJson
             patient.Mobile = long.Parse(Console.ReadLine());
             Console.Write("Email: ");
             patient.Email = Console.ReadLine();
-            var AllPatients = manager.GetAllPatients();
-            if (AllPatients.Any(p => p.Mobile == patient.Mobile || p.Email == patient.Email))
+
+            var allPatients = manager.GetAllPatients();
+            if (allPatients.Any(p => p.Mobile == patient.Mobile || p.Email == patient.Email))
             {
                 Console.WriteLine("A patient with the same mobile or email already exists.");
-                return; 
+                return;
             }
+
             Console.Write("Age: ");
             patient.Age = int.Parse(Console.ReadLine());
             Console.Write("Location: ");
             patient.Location = Console.ReadLine();
+
             manager.AddPatient(patient);
             Console.WriteLine("Patient added successfully.");
         }
-
-        private void ShowPatients()
+        private void ShowPatients(List<Patient> patients) 
         {
-            var patients = manager.GetAllPatients();
-
-            if (patients.Count != 0)
-            {
-                Console.WriteLine();
-                Console.WriteLine("-------------------------------------ABC Hospitals----------------------------------------\n");
-                Console.WriteLine("------------------------------------Patient Details---------------------------------------\n");
-                Console.WriteLine($"{"ID",-5} {"Name",-20} {"Age",-5} {"Mobile",-15} {"Email",-25} {"Location",-15}");
-                Console.WriteLine(new string('-', 90));
-
-                foreach (var patient in patients)
-                {
-                    Console.WriteLine(
-                        $"{patient.Id,-5} {patient.Name,-20} {patient.Age,-5} {patient.Mobile,-15} {patient.Email,-25} {patient.Location,-15}");
-                }
-            }
-            else
+            if (patients == null || patients.Count == 0)
             {
                 Console.WriteLine();
                 Console.WriteLine("There are no patient details to show. Please enter 1 to add patient details.\n");
+                return;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("-------------------------------------ABC Hospitals----------------------------------------\n");
+            Console.WriteLine("------------------------------------Patient Details---------------------------------------\n");
+            Console.WriteLine($"{"ID",-5} {"Name",-20} {"Age",-5} {"Mobile",-15} {"Email",-25} {"Location",-15}");
+            Console.WriteLine(new string('-', 90));
+
+            foreach (var patient in patients)
+            {
+                Console.WriteLine(
+                    $"{patient.Id,-5} {patient.Name,-20} {patient.Age,-5} {patient.Mobile,-15} {patient.Email,-25} {patient.Location,-15}");
             }
         }
-
         private void RemovePatient()
         {
             Console.Write("Enter Patient ID to remove: ");
@@ -124,7 +129,6 @@ namespace PatientAppUsingJson
                 Console.WriteLine("Invalid ID.");
             }
         }
-
         private void UpdatePatient()
         {
             Console.Write("Enter Patient ID to update: ");
@@ -155,8 +159,101 @@ namespace PatientAppUsingJson
                 Console.WriteLine("Invalid ID.");
             }
         }
+        private void SearchByName()
+        {
+            Console.Write("Enter Patient Name to Search: ");
+            string name = Console.ReadLine();
 
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                List<Patient> matchedPatients = manager.SearchByName(name);
 
+                if (matchedPatients.Any())
+                {
+                    Console.WriteLine("Matched Patients:");
+                    ShowPatients(matchedPatients);
+                }
+                else
+                {
+                    Console.WriteLine("Patient not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid name.");
+            }
+        }
+        private void SearchByEmail()
+        {
+            Console.Write("Enter Patient Email to Search: ");
+            string email = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                List<Patient> matchedPatients = manager.SearchByEmail(email);
+
+                if (matchedPatients.Any())
+                {
+                    Console.WriteLine("Matched Patients:");
+                    ShowPatients(matchedPatients);
+                }
+                else
+                {
+                    Console.WriteLine("Patient not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid Email.");
+            }
+        }
+        private void SearchByMobile()
+        {
+            Console.Write("Enter Patient Mobile Number to Search: ");
+            if (long.TryParse(Console.ReadLine(), out long mobile))
+            {
+                List<Patient> matchedPatients = manager.SearchByMobile(mobile);
+
+                if (matchedPatients.Any())
+                {
+                    Console.WriteLine("Matched Patients:");
+                    ShowPatients(matchedPatients);
+                }
+                else
+                {
+                    Console.WriteLine("Patient not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid mobile number.");
+            }
+
+        }
+        private void SearchByLocation()
+        {
+            Console.Write("Enter Patient Name to Search: ");
+            string location = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(location))
+            {
+                List<Patient> matchedPatients = manager.SearchByLocation(location);
+
+                if (matchedPatients.Any())
+                {
+                    Console.WriteLine("Matched Patients:");
+                    ShowPatients(matchedPatients);
+                }
+                else
+                {
+                    Console.WriteLine("Patient not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid Location.");
+            }
+        }
 
     }
 }

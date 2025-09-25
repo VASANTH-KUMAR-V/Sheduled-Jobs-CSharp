@@ -16,7 +16,7 @@ namespace PatientLibrary
             LoadData();
         }
 
-        private void LoadData()
+        private void LoadData() 
         {
             if (!File.Exists(filePath))
             {
@@ -66,10 +66,41 @@ namespace PatientLibrary
         }
 
         public List<Patient> GetAllPatients() => patients;
-
-        public List<Patient> Search(Func<Patient, bool> predicate)
+        public List<Patient> SearchByName(string name)
         {
-            return patients.Where(predicate).ToList();
+            if (string.IsNullOrWhiteSpace(name))
+                return new List<Patient>();
+
+            return patients
+                .Where(p => !string.IsNullOrWhiteSpace(p.Name) &&
+                            p.Name.ToLower().Contains(name.ToLower()))
+                .ToList();
         }
+        public List<Patient> SearchByEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return new List<Patient>();
+
+            return patients
+                .Where(p => !string.IsNullOrWhiteSpace(p.Email) &&
+                            p.Email.ToLower().Contains(email.ToLower()))
+                .ToList();
+        }
+        public List<Patient> SearchByMobile(long mobile)
+        {
+            return patients.Where(p => p.Mobile == mobile).ToList();
+        }
+        public List<Patient> SearchByLocation(string location)
+        {
+            if (string.IsNullOrWhiteSpace(location))
+                return new List<Patient>();
+
+            return patients
+                .Where(p => !string.IsNullOrWhiteSpace(p.Location) &&
+                            p.Location.ToLower().Contains(location.ToLower()))
+                .ToList();
+        }
+
+
     }
 }
