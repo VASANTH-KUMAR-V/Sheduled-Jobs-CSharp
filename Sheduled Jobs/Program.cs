@@ -10,11 +10,28 @@ namespace Projects
     {
         public static void Main(string[] args)
         {
-            //var test = new SendEmails();
-            //test.Send();
 
-            CrudOperations operations = new CrudOperations();
-            operations.Menu();
+            Console.WriteLine("Enter the Number to perform the Exercise");
+            var a = Convert.ToInt32(Console.ReadLine());
+            switch(a)
+            {
+                case 1:
+                    var test = new SendEmails();
+                    test.Send();
+                    break;
+                case 2:
+                    CrudOperations operations = new CrudOperations();
+                    operations.Menu();
+                    break;
+                case 3:
+                    //TaskScheduler task = new TaskScheduler();
+                    //task.Shedule();
+                    //break;
+                default:
+                    Console.Write("Enter the correct number: ");
+                    break;
+
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace PatientAppUsingJson
                 Console.WriteLine("5 - Search by Name");
                 Console.WriteLine("6 - Search by Email");
                 Console.WriteLine("7 - Search by Mobile");
-                Console.WriteLine("8 - Search by Age");
+             //   Console.WriteLine("8 - Search by Age");
                 Console.WriteLine("9 - Search by Location");
                 Console.WriteLine("10 - Exit");
 
@@ -68,7 +68,6 @@ namespace PatientAppUsingJson
                 }
             }
         }
-
         private void AddPatient()
         {
             var patient = new Patient();
