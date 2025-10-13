@@ -46,13 +46,13 @@ namespace Sheduled_Jobs
                         case 4:
                             UpdatePatient();
                             break;
-                        //case 5:
-                        //    SearchPatient();
-                        //    break;
+                        case 5:
+                            SearchPatient();
+                            break;
                         case 6:
                             Console.WriteLine("Exiting.....");
                             return;
-                        default:
+                        default: 
                             Console.WriteLine("You have entered an invalid number to perform an action.");
                             break;
                     }
@@ -116,11 +116,11 @@ namespace Sheduled_Jobs
             if (long.TryParse(Console.ReadLine(), out long id))
             {
                 bool result = repo.DeletePatients(id); // Ensure method name matches
-                Console.WriteLine(result ? "✅ Patient removed successfully." : "❌ Patient not found or could not be removed.");
+                Console.WriteLine(result ? "Patient removed successfully." : "Patient not found or could not be removed.");
             }
             else
             {
-                Console.WriteLine("❌ Invalid ID entered. Please enter a numeric value.");
+                Console.WriteLine("Invalid ID entered. Please enter a numeric value.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Sheduled_Jobs
                 var patient = repo.GetPatientById(id);  // <-- Use this method to fetch single patient
                 if (patient == null)
                 {
-                    Console.WriteLine("❌ Patient not found.");
+                    Console.WriteLine("Patient not found.");
                     return;
                 }
 
@@ -163,36 +163,49 @@ namespace Sheduled_Jobs
             }
         }
 
-        //public List<Patient> SearchPatients(Patient patient)
-        //{
-        //    try
-        //    {
-        //        string sql = @"
-        //SELECT * FROM PatientDetails
-        //WHERE
-        //    (@Name IS NULL OR name LIKE '%' + @Name + '%') 
-        //    AND (@Email IS NULL OR email LIKE '%' + @Email + '%')
-        //    AND (@Location IS NULL OR location LIKE '%' + @Location + '%')
-        //";
+        private void SearchPatient()
+        {
+            Console.Write("Enter Patient Name (or leave blank): ");
+            var name = Console.ReadLine();
 
-        //        using (var connection = DatabaseHelper.GetOpenConnection())
-        //        {
-        //            var result = connection.Query<Patient>(sql, new
-        //            {
-        //                Name = string.IsNullOrWhiteSpace(patient.Name) ? null : patient.Name,
-        //                Email = string.IsNullOrWhiteSpace(patient.Email) ? null : patient.Email,
-        //                Location = string.IsNullOrWhiteSpace(patient.Location) ? null : patient.Location
-        //            }).ToList();
+            Console.Write("Enter Email (or leave blank): ");
+            var email = Console.ReadLine();
 
-        //            return result;
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("SQL Error: " + ex.Message);
-        //        return new List<Patient>();
-        //    }
-        //}
+            Console.Write("Enter Mobile (or leave blank): ");
+            var mobileInput = Console.ReadLine();
+            long mobile = 0;
+            long.TryParse(mobileInput, out mobile);
+
+            Console.Write("Enter Age (or leave blank): ");
+            var ageInput = Console.ReadLine();
+            int age = 0;
+            int.TryParse(ageInput, out age);
+
+            Console.Write("Enter Location (or leave blank): ");
+            var location = Console.ReadLine();
+
+            var searchCriteria = new Patient
+            {
+                Name = string.IsNullOrWhiteSpace(name) ? null : name,
+                Email = string.IsNullOrWhiteSpace(email) ? null : email,
+                Mobile = mobile,
+                Age = age,
+                Location = string.IsNullOrWhiteSpace(location) ? null : location
+            };
+
+            var matchedPatients = repo.SearchPatients(searchCriteria);
+
+            if (matchedPatients.Any())
+            {
+                Console.WriteLine("Matched Patients:");
+                ShowPatients(matchedPatients);
+            }
+            else
+            {
+                Console.WriteLine("No matching patients found.");
+            }
+        }
+
 
 
 
