@@ -132,12 +132,13 @@ namespace RestAPIClient
             }
         }
 
-        public async Task DeleteDataAsync(string endpoint)
+        public async Task<string> DeleteDataAsync(string endpoint)
         {
             try
             {
                 HttpResponseMessage response = await _httpClient.DeleteAsync(endpoint);
                 response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsStringAsync();
             }
             catch (Exception)
             {
